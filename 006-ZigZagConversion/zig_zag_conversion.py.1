@@ -1,0 +1,53 @@
+# -*- coding:utf-8 -*-
+class Solution:
+    # @param {string} s
+    # @param {integer} numRows
+    # @resulturn {string}
+    '''
+    假设输入字符串为ABCDEFGH，按如下方式排列
+    A     G
+    B   F H
+    C E
+    D
+    先补全，使其成为如下二维数组
+    A     G
+    B   F H
+    C E   *
+    D     *
+    遍历原字符串ABCDEFGH，计算每个字符在二维数组里对应的位置
+    并填入相应位置
+    然后将二维数组按行输出，过滤掉占位符
+    '''
+    def convert(self, s, numRows):
+        if numRows == 1:
+            return s
+        T_num = numRows + numRows - 2
+        T_count = len(s) / T_num
+        m = len(s) % T_num
+        if m < numRows:
+            empty_str = ' ' * (T_count * (numRows - 1) + 1)
+        else:
+            empty_str = ' ' * (T_count * (numRows - 1) + (m + 1 - (numRows - 1)))
+        result_arr = []
+        for i in range(numRows):
+            result_arr.append(list(empty_str))
+
+        #print result_arr
+        #print 'T_num:', T_num, ' T_count:', T_count
+
+        for i in range(len(s)):
+            m = i % T_num
+            T_index = i / T_num
+            if m < numRows:
+                row = m
+                col = T_index * (numRows - 1)
+            else:
+                row = numRows - 1 - (m - (numRows - 1))
+                col = T_index * (numRows -1) + (m - (numRows - 1))
+            #print 'c:', s[i], ' T_index:', T_index, ' m:', m, ' row:', row, ' col:', col
+            result_arr[row][col] = s[i]
+        #print result_arr
+        return ''.join([filter(lambda x:x != ' ', ''.join(tmp_str)) for tmp_str in result_arr])
+
+s = Solution()
+print s.convert('wjkakhxhsglmmhstrwgulfztwhhjlbihmviwehfwntibadvubdomiphgxpsiscsexccbjhazakadnvxqanelemtbdlmvoezlgbprkpqlbtqpqphrcmcgyvkbhwyvcxikazbkquxsnpjdeqwicyrcwbfdzdabcklcmmpciouvedbiwxryyidulizkmblonwtzkkcvayqectpariyrqdldmmnynaoawjaivedwcwcgrrgibhbtkmwwyjwnjnohyqsuuxqwvufnmlxnszhfnfbmpabaprknhchdzzaxufkishxngeswkvkbvlbkdlamphqrhsodzylrhieqpymbuwcrhfemtezklpbuhrxgpkzzvgpkedlyzpqiwuvrywelnfguxfcosdpnjexohkoiberzaotymxmzeuvdbzutcjimqhcxrqiuxbwxrpydokcsgxwhwqdazloptqpmjzjgafftwdwkpacxzafxqkxsvmjqeadpbmvbtbupgsbysdvtecqwmqqiecaicdyervhkyebhwcfricmofdmttddxfehjhhnbdxnbbpiztpsdufrzkeudjycqcjzltpmwmczprkqmblqvqjwcnrfypjotuoenftlrvlioxycylsubcqfrhksyvgrqwyfbtruqecgbdibodvshoxaxksyhbrxxrfbkyvccaifftgtwendulfrxyrebjeaajbljzplzyseryzpenuyazszxldyujzvucidbxqcxiiqjifnxbozbiyatdzqpaljevpisfksovkxfqmctcdumdviiwyxwljcgykadvsrsdqxvfbojelwjgercerapacvypxdmqxevpbsucieitctbikdmdfdfkydzvjlngpkvqcsunyeiaxkijnwnvzsfzyewhpkpewmwbeqocwwetgmcwkrrjkwikahtrtivpurqbjgffdkalwcjjuasgydqamjrftmupfnqqtwxyixmgavp', 621)

@@ -1,0 +1,29 @@
+class Solution:
+    # @param {string} s
+    # @return {string}
+    def longestPalindrome(self, s):
+        if len(s) <= 1:
+            return s
+        longest_palindrome = s[0]
+        for palindrome_len in range(2, len(s) + 1):
+            for palindrome_begin_index in range(0, len(s) - palindrome_len + 1):
+                palindrome_str = s[palindrome_begin_index:palindrome_begin_index + palindrome_len]
+                if self.isPalindrome(palindrome_str):
+                    longest_palindrome = palindrome_str
+
+        return longest_palindrome
+
+    def isPalindrome(self, s):
+        if s == "":
+            return False
+        if len(s) == 1:
+            return True
+        if len(s) % 2 == 0:
+            return s[0:len(s)/2] == s[len(s)/2:][::-1]
+        else:
+            return s[0:len(s)/2] == s[len(s)/2+1:][::-1]
+
+s = Solution()
+#s.longestPalindrome("abcbxbcy")
+#print s.longestPalindrome('azwdzwmwcqzgcobeeiphemqbjtxzwkhiqpbrprocbppbxrnsxnwgikiaqutwpftbiinlnpyqstkiqzbggcsdzzjbrkfmhgtnbujzszxsycmvipjtktpebaafycngqasbbhxaeawwmkjcziybxowkaibqnndcjbsoehtamhspnidjylyisiaewmypfyiqtwlmejkpzlieolfdjnxntonnzfgcqlcfpoxcwqctalwrgwhvqvtrpwemxhirpgizjffqgntsmvzldpjfijdncexbwtxnmbnoykxshkqbounzrewkpqjxocvaufnhunsmsazgibxedtopnccriwcfzeomsrrangufkjfzipkmwfbmkarnyyrgdsooosgqlkzvorrrsaveuoxjeajvbdpgxlcrtqomliphnlehgrzgwujogxteyulphhuhwyoyvcxqatfkboahfqhjgujcaapoyqtsdqfwnijlkknuralezqmcryvkankszmzpgqutojoyzsnyfwsyeqqzrlhzbc')
+print s.longestPalindrome('jhgtrclvzumufurdemsogfkpzcwgyepdwucnxrsubrxadnenhvjyglxnhowncsubvdtftccomjufwhjupcuuvelblcdnuchuppqpcujernplvmombpdttfjowcujvxknzbwmdedjydxvwykbbamfnsyzcozlixdgoliddoejurusnrcdbqkfdxsoxxzlhgyiprujvvwgqlzredkwahexewlnvqcwfyahjpeiucnhsdhnxtgizgpqphunlgikogmsffexaeftzhblpdxrxgsmeascmqngmwbotycbjmwrngemxpfakrwcdndanouyhnnrygvntrhcuxgvpgjafijlrewfhqrguwhdepwlxvrakyqgstoyruyzohlvvdhvqmzdsnbtlwctetwyrhhktkhhobsojiyuydknvtxmjewvssegrtmshxuvzcbrabntjqulxkjazrsgbpqnrsxqflvbvzywzetrmoydodrrhnhdzlajzvnkrcylkfmsdode')
