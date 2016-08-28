@@ -32,9 +32,21 @@ public:
             word_len_total += it->size();
         }
         int offset = 0;
+        int last_ok_offset = -1;
         while (offset + word_len_total <= s.size())
         {
             int pos = offset;
+            if (last_ok_offset > 0 && pos == last_ok_offset + word_len)
+            {
+                string left = string(s, last_ok_offset, word_len);
+                string right = string(s, last_ok_offset + word_len_total, word_len);
+                if (left == right)
+                {
+                    results.push_back(pos);
+                    offset += 1;
+                    continue;
+                }
+            }
             map<string, int> tmp_words_count = words_count;
             while (pos + word_len <= s.size())
             {
@@ -57,6 +69,7 @@ public:
             if (tmp_words_count.size() == 0)
             {
                 results.push_back(offset);
+                last_ok_offset = offset;
             }
             offset += 1;
         }
